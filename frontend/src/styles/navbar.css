@@ -1,0 +1,60 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 220px; /* sidebar width */
+  right: 0;
+  height: 60px;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 200;
+  font-weight: 500;
+}
+
+.navbar h1 {
+  font-size: 22px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-notification {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.btn-notification:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-info:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.user-icon {
+  font-size: 22px;
+}

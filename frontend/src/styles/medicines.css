@@ -1,0 +1,76 @@
+.medicines-container {
+  padding: 30px;
+}
+
+.medicines-container h2 {
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* Medicines Table */
+.medicines-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.medicines-table th,
+.medicines-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.medicines-table th {
+  background-color: #4f46e5; /* primary color */
+  color: white;
+  font-weight: 600;
+}
+
+.medicines-table tr:hover {
+  background-color: #f3f4f6;
+}
+
+.sell-btn, .edit-btn, .delete-btn {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.sell-btn {
+  background-color: #10b981;
+}
+.sell-btn:hover {
+  background-color: #059669;
+}
+
+.edit-btn {
+  background-color: #6366f1;
+}
+.edit-btn:hover {
+  background-color: #4f46e5;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+}
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Highlights */
+.low-stock td:nth-child(3),
+.near-expiry td:nth-child(4) {
+  font-weight: bold;
+  color: #ef4444;
+  text-shadow: 0 0 6px #ef4444, 0 0 12px #ef4444;
+}
