@@ -19,7 +19,7 @@ export const updateMedicine = (id, data) => api.put(`/medicines/${id}`, data);
 // Delete medicine by ID
 export const deleteMedicine = (id) => api.delete(`/medicines/${id}`);
 
-// Subtract 1 from stock (sell medicine)
 export const sellMedicine = (id) => api.post(`/medicines/${id}/sell`);
+
 
 

@@ -1,63 +1,90 @@
-let medicines = [
-  { id: 1, name: "Paracetamol", stock: 10, expiry: "2025-12-31" },
-  { id: 2, name: "Ibuprofen", stock: 5, expiry: "2025-08-15" },
-];
+const db = require("../config/db");
 
 // Get all medicines
 const getAllMedicines = (req, res) => {
-  res.json(medicines);
+  db.query("SELECT * FROM medicines", (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(results);
+  });
 };
 
 // Get one medicine by ID
 const getMedicineById = (req, res) => {
-  const id = parseInt(req.params.id);
-  const med = medicines.find(m => m.id === id);
-  if (!med) return res.status(404).json({ error: "Medicine not found" });
-  res.json(med);
+  const id = req.params.id;
+  db.query("SELECT * FROM medicines WHERE id = ?", [id], (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    if (results.length === 0) return res.status(404).json({ error: "Medicine not found" });
+    res.json(results[0]);
+  });
 };
 
 // Add new medicine
 const addMedicine = (req, res) => {
   const { name, stock, expiry } = req.body;
-  const id = medicines.length ? medicines[medicines.length - 1].id + 1 : 1;
-  const newMed = { id, name, stock, expiry };
-  medicines.push(newMed);
-  res.status(201).json(newMed);
+
+  db.query(
+    "INSERT INTO medicines (name, stock, expiry) VALUES (?, ?, ?)",
+    [name, stock, expiry],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err });
+
+      res.status(201).json({
+        id: result.insertId,
+        name,
+        stock,
+        expiry
+      });
+    }
+  );
 };
 
 // Update medicine
 const updateMedicine = (req, res) => {
-  const id = parseInt(req.params.id);
-  const med = medicines.find(m => m.id === id);
-  if (!med) return res.status(404).json({ error: "Medicine not found" });
+  const id = req.params.id;
   const { name, stock, expiry } = req.body;
-  med.name = name ?? med.name;
-  med.stock = stock ?? med.stock;
-  med.expiry = expiry ?? med.expiry;
-  res.json(med);
+
+  db.query(
+    "UPDATE medicines SET name=?, stock=?, expiry=? WHERE id=?",
+    [name, stock, expiry, id],
+    (err) => {
+      if (err) return res.status(500).json({ error: err });
+
+      res.json({ id, name, stock, expiry });
+    }
+  );
 };
 
 // Delete medicine
 const deleteMedicine = (req, res) => {
-  const id = parseInt(req.params.id);
-  medicines = medicines.filter(m => m.id !== id);
-  res.json({ message: "Deleted successfully" });
+  const id = req.params.id;
+
+  db.query("DELETE FROM medicines WHERE id=?", [id], (err) => {
+    if (err) return res.status(500).json({ error: err });
+
+    res.json({ message: "Deleted successfully" });
+  });
 };
 
-// Sell medicine (subtract 1 from stock)
+// Sell (reduce stock by 1)
 const sellMedicine = (req, res) => {
-  const id = parseInt(req.params.id);
-  const med = medicines.find(m => m.id === id);
-  if (!med) return res.status(404).json({ error: "Medicine not found" });
-  med.stock = med.stock > 0 ? med.stock - 1 : 0;
-  res.json(med);
+  const id = req.params.id;
+
+  db.query(
+    "UPDATE medicines SET stock = stock - 1 WHERE id = ? AND stock > 0",
+    [id],
+    (err) => {
+      if (err) return res.status(500).json({ error: err });
+
+      res.json({ message: "Sold one unit" });
+    }
+  );
 };
 
 module.exports = {
   getAllMedicines,
-  getMedicineById,  // <- export this
+  getMedicineById,
   addMedicine,
   updateMedicine,
   deleteMedicine,
-  sellMedicine,      // <- export this
+  sellMedicine
 };
