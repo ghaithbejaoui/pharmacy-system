@@ -44,6 +44,7 @@ const EditMedicine = () => {
       expiry
     });
     navigate("/medicines");
+    window.location.reload();
   };
 
   return (

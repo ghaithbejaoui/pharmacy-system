@@ -37,6 +37,7 @@ const AddMedicine = () => {
       });
       alert("Medicine added successfully!");
       navigate("/medicines");
+      window.location.reload();
     } catch (err) {
       alert("Failed to add medicine");
     }

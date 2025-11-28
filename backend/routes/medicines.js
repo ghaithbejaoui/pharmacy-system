@@ -6,7 +6,6 @@ const {
   addMedicine,
   updateMedicine,
   deleteMedicine,
-  sellMedicine,
 } = require("../controllers/medicinesController");
 
 router.get("/", getAllMedicines);
@@ -14,6 +13,6 @@ router.get("/:id", getMedicineById);          // <-- get one medicine
 router.post("/", addMedicine);
 router.put("/:id", updateMedicine);
 router.delete("/:id", deleteMedicine);
-router.post("/:id/sell", sellMedicine);      // <-- sell medicine
+      // <-- sell medicine
 
 module.exports = router;

@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const salesController = require("../controllers/salesController");
+const { getAllSales, addSale, deleteSale } = require("../controllers/salesController");
 
-router.get("/", salesController.getAllSales);
-router.post("/", salesController.addSale);
-router.delete("/:id", salesController.deleteSale);
-
-router.get("/stats/daily", salesController.getDailyRevenue);
-router.get("/stats/monthly", salesController.getMonthlyRevenue);
+router.get("/", getAllSales);      // ← correct name
+router.post("/", addSale);
+router.delete("/:id", deleteSale);
 
 module.exports = router;

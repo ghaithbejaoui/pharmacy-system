@@ -18,8 +18,4 @@ export const updateMedicine = (id, data) => api.put(`/medicines/${id}`, data);
 
 // Delete medicine by ID
 export const deleteMedicine = (id) => api.delete(`/medicines/${id}`);
-
-export const sellMedicine = (id) => api.post(`/medicines/${id}/sell`);
-
-
-
+// sellMedicine WAS REMOVED — DO NOT IMPORT IT ANYWHERE

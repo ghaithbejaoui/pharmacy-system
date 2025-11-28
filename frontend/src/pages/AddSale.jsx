@@ -35,8 +35,8 @@ const AddSale = () => {
 
     try {
       await addSale({
-        medicine_id: selected,
-        quantity
+        medicine_id: Number(selected),
+        quantity: Number(quantity)   // ← THIS WAS MISSING
       });
 
       alert("Sale recorded!");

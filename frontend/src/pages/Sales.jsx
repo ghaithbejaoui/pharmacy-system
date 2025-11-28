@@ -41,7 +41,7 @@ const Sales = () => {
               <td>{sale.medicine_name}</td>
               <td>{sale.quantity}</td>
               <td>{sale.total_price} TND</td>
-              <td>{new Date(sale.date).toLocaleString()}</td>
+              <td>{new Date(sale.sale_date).toLocaleString()}</td>
             </tr>
           ))}
         </tbody>

@@ -15,4 +15,3 @@ app.use("/api/sales", salesRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
