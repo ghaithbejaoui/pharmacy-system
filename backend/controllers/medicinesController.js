@@ -1,90 +1,97 @@
-const db = require("../config/db");
+// backend/controllers/medicinesController.js
+import db from "../config/db.js";
 
-// Get all medicines
-const getAllMedicines = (req, res) => {
-  db.query("SELECT * FROM medicines", (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    res.json(results);
-  });
+// GET all medicines
+export const getAllMedicines = async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM medicines ORDER BY id DESC");
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch medicines" });
+  }
 };
 
-// Get one medicine by ID
-const getMedicineById = (req, res) => {
-  const id = req.params.id;
-  db.query("SELECT * FROM medicines WHERE id = ?", [id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    if (results.length === 0) return res.status(404).json({ error: "Medicine not found" });
-    res.json(results[0]);
-  });
+// GET one medicine
+export const getMedicineById = async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM medicines WHERE id = ?", [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ error: "Medicine not found" });
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
-// Add new medicine
-const addMedicine = (req, res) => {
-  const { name, stock, expiry } = req.body;
+// ADD new medicine
+export const addMedicine = async (req, res) => {
+  const { name, stock, price, expiry } = req.body;
 
-  db.query(
-    "INSERT INTO medicines (name, stock, expiry) VALUES (?, ?, ?)",
-    [name, stock, expiry],
-    (err, result) => {
-      if (err) return res.status(500).json({ error: err });
+  // CRITICAL: Proper validation + conversion
+  if (!name || !stock || !price || !expiry) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
 
-      res.status(201).json({
-        id: result.insertId,
-        name,
-        stock,
-        expiry
-      });
+  const priceNum = parseFloat(price);
+  const stockNum = parseInt(stock);
+
+  if (isNaN(priceNum) || priceNum < 0) {
+    return res.status(400).json({ error: "Invalid price" });
+  }
+  if (isNaN(stockNum) || stockNum < 0) {
+    return res.status(400).json({ error: "Invalid stock" });
+  }
+
+  try {
+    await db.query(
+      "INSERT INTO medicines (name, stock, price, expiry) VALUES (?, ?, ?, ?)",
+      [name.trim(), stockNum, priceNum, expiry]
+    );
+    res.status(201).json({ message: "Medicine added successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add medicine" });
+  }
+};
+
+// UPDATE medicine
+export const updateMedicine = async (req, res) => {
+  const { name, stock, price, expiry } = req.body;
+  const { id } = req.params;
+
+  const priceNum = parseFloat(price);
+  const stockNum = parseInt(stock);
+
+  if (!name || isNaN(priceNum) || isNaN(stockNum) || !expiry) {
+    return res.status(400).json({ error: "Invalid data" });
+  }
+
+  try {
+    const [result] = await db.query(
+      "UPDATE medicines SET name = ?, stock = ?, price = ?, expiry = ? WHERE id = ?",
+      [name.trim(), stockNum, priceNum, expiry, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Medicine not found" });
     }
-  );
+
+    res.json({ message: "Medicine updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update" });
+  }
 };
 
-// Update medicine
-const updateMedicine = (req, res) => {
-  const id = req.params.id;
-  const { name, stock, expiry } = req.body;
-
-  db.query(
-    "UPDATE medicines SET name=?, stock=?, expiry=? WHERE id=?",
-    [name, stock, expiry, id],
-    (err) => {
-      if (err) return res.status(500).json({ error: err });
-
-      res.json({ id, name, stock, expiry });
+// DELETE medicine
+export const deleteMedicine = async (req, res) => {
+  try {
+    const [result] = await db.query("DELETE FROM medicines WHERE id = ?", [req.params.id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Medicine not found" });
     }
-  );
-};
-
-// Delete medicine
-const deleteMedicine = (req, res) => {
-  const id = req.params.id;
-
-  db.query("DELETE FROM medicines WHERE id=?", [id], (err) => {
-    if (err) return res.status(500).json({ error: err });
-
-    res.json({ message: "Deleted successfully" });
-  });
-};
-
-// Sell (reduce stock by 1)
-const sellMedicine = (req, res) => {
-  const id = req.params.id;
-
-  db.query(
-    "UPDATE medicines SET stock = stock - 1 WHERE id = ? AND stock > 0",
-    [id],
-    (err) => {
-      if (err) return res.status(500).json({ error: err });
-
-      res.json({ message: "Sold one unit" });
-    }
-  );
-};
-
-module.exports = {
-  getAllMedicines,
-  getMedicineById,
-  addMedicine,
-  updateMedicine,
-  deleteMedicine,
-  sellMedicine
+    res.json({ message: "Medicine deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "Delete failed" });
+  }
 };

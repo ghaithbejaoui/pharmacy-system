@@ -63,6 +63,7 @@ const Medicines = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Stock</th>
+            <th>price</th>
             <th>Expiry</th>
             <th>Actions</th>
           </tr>
@@ -78,6 +79,7 @@ const Medicines = () => {
               <td>{med.id}</td>
               <td>{med.name}</td>
               <td>{med.stock}</td>
+              <td>{med.price}</td>
               <td>{med.expiry}</td>
               <td>
                 <button

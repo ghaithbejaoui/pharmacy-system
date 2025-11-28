@@ -8,6 +8,7 @@ const EditMedicine = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [stock, setStock] = useState("");
+  const [price, setPrice] = useState("");
   const [expiry, setExpiry] = useState("");
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const EditMedicine = () => {
       const res = await getMedicineById(id);
       setName(res.data.name);
       setStock(res.data.stock);
+      setPrice(res.data.price);
       setExpiry(res.data.expiry);
     } catch (err) {
       console.error(err);
@@ -27,9 +29,20 @@ const EditMedicine = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !stock || !expiry) return alert("Please fill all fields");
 
-    await updateMedicine(id, { name, stock, expiry });
+    const priceNum = parseFloat(price);
+    const stockNum = parseInt(stock);
+
+    if (!name || !stock || !expiry || isNaN(priceNum)) {
+      return alert("Please fill all fields correctly");
+    }
+
+    await updateMedicine(id, {
+      name,
+      stock: stockNum,
+      price: priceNum,   // ← this was the bug!
+      expiry
+    });
     navigate("/medicines");
   };
 
@@ -42,6 +55,9 @@ const EditMedicine = () => {
 
         <label>Stock</label>
         <input type="number" value={stock} onChange={(e) => setStock(e.target.value)} />
+
+        <label>price</label>
+        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
 
         <label>Expiry Date</label>
         <input type="date" value={expiry} onChange={(e) => setExpiry(e.target.value)} />
