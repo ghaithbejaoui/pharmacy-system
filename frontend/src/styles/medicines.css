@@ -35,6 +35,79 @@
   background-color: #f3f4f6;
 }
 
+/* Dark mode hover */
+body.dark .medicines-table tr:hover {
+  background-color: #334155;
+}
+
+/* Dark mode for forms */
+body.dark form {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+body.dark input,
+body.dark select {
+  background-color: #334155 !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+body.dark input::placeholder,
+body.dark select {
+  color: #9ca3af !important;
+}
+
+body.dark .profile-card {
+  background-color: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+body.dark .profile-field {
+  background-color: #334155 !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+body.dark .user-form-container {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+body.dark .user-form-container label {
+  color: #e2e8f0 !important;
+}
+
+body.dark .user-form-container .form-input {
+  background-color: #334155 !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #10b981;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 10000;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.toast.error {
+  background: #ef4444;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .sell-btn, .edit-btn, .delete-btn {
   padding: 6px 12px;
   margin-right: 5px;

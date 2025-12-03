@@ -1,11 +1,13 @@
 // frontend/src/pages/Medicines.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getMedicines, deleteMedicine } from "../services/medicineService";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import "../styles/medicines.css";
 
 const Medicines = () => {
   const [medicines, setMedicines] = useState([]);
+  const { setToast } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,12 +25,16 @@ const Medicines = () => {
   };
 
   const handleDelete = async (id) => {
+    const medicine = medicines.find(m => m.id === id);
     if (!confirm("Delete this medicine?")) return;
     try {
       await deleteMedicine(id);
+      setToast(`${medicine.name} deleted successfully!`);
+      setTimeout(() => setToast(""), 4000);
       fetchMedicines();
     } catch (err) {
-      alert("Delete failed");
+      setToast("Delete failed");
+      setTimeout(() => setToast(""), 4000);
     }
   };
 
@@ -48,6 +54,7 @@ const Medicines = () => {
   };
 
   return (
+    <div >
     <div className="medicines-container">
       <h2>Medicines</h2>
       <button onClick={() => navigate("/add")} style={{ marginBottom: "20px", padding: "10px 20px", background: "#4f46e5", color: "white", border: "none", borderRadius: "8px" }}>
@@ -89,6 +96,7 @@ const Medicines = () => {
           )}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

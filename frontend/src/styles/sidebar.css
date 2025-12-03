@@ -1,56 +1,122 @@
 .sidebar {
   position: fixed;
-  top: 0;
   left: 0;
-  width: 220px;
+  top: 0;
+  width: 80px;
   height: 100vh;
-  background-color: #1e293b;
+  background: #1e293b;
   color: white;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  z-index: 100;
+  transition: all 0.4s;
+  z-index: 999;
+  overflow: hidden;
+}
+
+body.sidebar-expanded .sidebar,
+body.sidebar-locked .sidebar {
+  width: 240px;
+}
+
+body.sidebar-locked-small .sidebar {
+  width: 80px;
+}
+
+.sidebar-lock-btn-bottom {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 1;
+  transition: all 0.3s;
+}
+
+body.dark .sidebar {
+  background: #1e293b;
 }
 
 .sidebar-header {
+  padding: 20px;
   text-align: center;
-  margin-bottom: 40px;
+  border-bottom: 1px solid #334155;
+  white-space: nowrap;
 }
 
 .sidebar-header h2 {
+  font-size: 16px;
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+body.sidebar-expanded .sidebar-header h2,
+body.sidebar-locked .sidebar-header h2 {
   font-size: 24px;
-  font-weight: bold;
-  color: #4f46e5;
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
+.sidebar-lock-btn {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.3s;
 }
 
-.sidebar li {
-  margin-bottom: 20px;
+.sidebar-nav {
+  padding: 20px 0;
 }
 
-.sidebar a {
-  text-decoration: none;
-  color: #cbd5e1;
-  font-weight: 500;
+.sidebar-link {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
+  gap: 16px;
+  padding: 16px 24px;
+  color: #cbd5e1;
+  background: transparent;
+  font-weight: normal;
+  transition: all 0.3s;
+  text-decoration: none;
   border-radius: 8px;
-  transition: all 0.2s ease;
 }
 
-.sidebar a:hover,
-.sidebar li.active a {
-  background-color: #4f46e5;
-  color: white;
-}
-
-.sidebar li.active a {
+.sidebar-link.active {
+  color: #6366f1;
+  background: rgba(99, 102, 241, 0.2);
   font-weight: bold;
+}
+
+.sidebar-link:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+body.dark .sidebar-link:hover {
+  background: white;
+  color: black;
+}
+
+.sidebar-link .icon {
+  font-size: 24px;
+}
+
+.sidebar-link .label {
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+body.sidebar-expanded .sidebar-link .label,
+body.sidebar-locked .sidebar-link .label {
+  opacity: 1;
+  transform: translateX(0);
 }

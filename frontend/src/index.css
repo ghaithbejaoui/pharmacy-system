@@ -1,0 +1,63 @@
+/* BODY BACKGROUND */
+body {
+  background: #f8fafc;
+}
+
+/* DARK MODE FOR ALL YOUR PAGES — PURE CSS */
+body.dark {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark .medicines-container,
+body.dark .add-medicine-container,
+body.dark .add-sale-container,
+body.dark .sales-container,
+body.dark .dashboard-container {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark table {
+  background: #1e293b !important;
+}
+
+body.dark th {
+  background: #6366f1 !important;
+  color: white !important;
+}
+
+body.dark td {
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+body.dark input,
+body.dark select {
+  background: #334155 !important;
+  color: white !important;
+  border: 1px solid #475569 !important;
+}
+
+
+body.dark .btn-primary {
+  background: linear-gradient(135deg, #818cf8, #a78bfa) !important;
+}
+
+body.dark .btn-primary:hover {
+  background: linear-gradient(135deg, #6366f1, #7c3aed) !important;
+}
+
+body.dark button:not(.btn-primary):hover {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+
+body.dark a {
+  color: #60a5fa !important;
+}
+
+body.dark h1, body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
+  color: #f1f5f9 !important;
+}

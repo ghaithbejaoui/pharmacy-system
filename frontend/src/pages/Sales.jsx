@@ -20,6 +20,8 @@ const Sales = () => {
   };
 
   return (
+    <div >
+
     <div className="sales-container">
       <h2>Sales</h2>
 
@@ -46,6 +48,7 @@ const Sales = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

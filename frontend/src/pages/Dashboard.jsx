@@ -1,8 +1,9 @@
 // src/pages/Dashboard.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getMedicines } from "../services/medicineService";
 import { getSales } from "../services/salesService";
 import Card from "../components/Card";
+import { AuthContext } from "../context/AuthContext";
 import "../styles/dashboard.css";
 import { FaPills, FaExclamationTriangle, FaBoxOpen, FaMoneyBillWave, FaChartLine, FaClock, FaCalendarDay } from "react-icons/fa";
 import { Line } from "react-chartjs-2";
@@ -11,6 +12,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Dashboard = () => {
+  const { isDark } = useContext(AuthContext);
   const [stats, setStats] = useState({
     totalMedicines: 0,
     lowStock: 0,
@@ -100,8 +102,9 @@ const Dashboard = () => {
   ];
 
   return (
+    <div >
     <div className="main-content">
-      <h2 style={{ marginBottom: "30px", fontSize: "28px" }}>Pharmacy Dashboard</h2>
+      <h2 style={{ marginBottom: "20px", fontSize: "28px" }}>Pharmacy Dashboard</h2>
 
       {/* KPI Cards */}
       <div className="cards-grid">
@@ -111,16 +114,44 @@ const Dashboard = () => {
       </div>
 
       {/* Revenue Chart */}
-      <div style={{ marginTop: "40px", background: "white", padding: "20px", borderRadius: "12px", boxShadow: "0 6px 15px rgba(0,0,0,0.08)" }}>
-        <h3 style={{ marginBottom: "20px", color: "#1f2937" }}>Revenue Last 7 Days</h3>
-        <div style={{ height: "300px" }}>
-          <Line data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+      <div className="chart-container">
+        <h3>Revenue Last 7 Days</h3>
+        <div className="chart-wrapper">
+          <Line data={chartData} options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: {
+                  color: isDark ? 'white' : '#1f2937'
+                }
+              }
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: isDark ? 'white' : '#6b7280'
+                },
+                grid: {
+                  color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                }
+              },
+              y: {
+                ticks: {
+                  color: isDark ? 'white' : '#6b7280'
+                },
+                grid: {
+                  color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                }
+              }
+            }
+          }} />
         </div>
       </div>
 
       {/* Recent Sales */}
-      <div style={{ marginTop: "40px", background: "white", padding: "20px", borderRadius: "12px", boxShadow: "0 6px 15px rgba(0,0,0,0.08)" }}>
-        <h3 style={{ marginBottom: "20px", color: "#1f2937" }}>Recent Sales</h3>
+      <div className="table-container">
+        <h3>Recent Sales</h3>
         {recentSales.length === 0 ? (
           <p>No sales yet.</p>
         ) : (
@@ -146,6 +177,7 @@ const Dashboard = () => {
           </table>
         )}
       </div>
+    </div>
     </div>
   );
 };

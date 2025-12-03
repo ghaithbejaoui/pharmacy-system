@@ -46,3 +46,51 @@
 .add-medicine-container button:hover {
   background-color: #6366f1;
 }
+
+body.dark .add-medicine-container button:hover {
+  background-color: #4f46e5;
+}
+
+/* Dark mode styles */
+body.dark .add-medicine-container {
+  background-color: #1e293b;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+body.dark .add-medicine-container h2 {
+  color: #f1f5f9;
+}
+
+body.dark .add-medicine-container label {
+  color: #e2e8f0;
+}
+
+body.dark .add-medicine-container input {
+  background-color: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #10b981;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 10000;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.toast.error {
+  background: #ef4444;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

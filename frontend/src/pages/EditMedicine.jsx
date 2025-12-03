@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getMedicineById, updateMedicine } from "../services/medicineService";
+import { AuthContext } from "../context/AuthContext";
 import "../styles/addMedicine.css"; // reuse AddMedicine styling
 
 const EditMedicine = () => {
@@ -10,6 +11,7 @@ const EditMedicine = () => {
   const [stock, setStock] = useState("");
   const [price, setPrice] = useState("");
   const [expiry, setExpiry] = useState("");
+  const { setToast } = useContext(AuthContext);
 
   useEffect(() => {
     fetchMedicine();
@@ -37,17 +39,24 @@ const EditMedicine = () => {
       return alert("Please fill all fields correctly");
     }
 
-    await updateMedicine(id, {
-      name,
-      stock: stockNum,
-      price: priceNum,   // ← this was the bug!
-      expiry
-    });
-    navigate("/medicines");
-    window.location.reload();
+    try {
+      await updateMedicine(id, {
+        name,
+        stock: stockNum,
+        price: priceNum,   // ← this was the bug!
+        expiry
+      });
+      setToast("Medicine updated successfully!");
+      setTimeout(() => setToast(""), 4000);
+      navigate("/medicines");
+    } catch (err) {
+      setToast("Failed to update medicine");
+      setTimeout(() => setToast(""), 4000);
+    }
   };
 
   return (
+    <div >
     <div className="add-medicine-container">
       <h2>Edit Medicine</h2>
       <form onSubmit={handleSubmit}>
@@ -65,6 +74,7 @@ const EditMedicine = () => {
 
         <button type="submit">Update Medicine</button>
       </form>
+    </div>
     </div>
   );
 };

@@ -1,19 +1,30 @@
-import React from "react";
+
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import { Outlet } from "react-router-dom";
-import "../styles/dashboard.css";
+import "../styles/layout.css";
 
 const Layout = () => {
+  const { user, toast } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
   return (
-    <div>
+    <div style={{ position: "relative", minHeight: "100vh" }}>
+      {/* Navbar & Sidebar */}
       <Navbar />
-      <div className="dashboard-container">
-        <Sidebar />
-        <main className="main-content">
-          <Outlet /> {/* Child route content will render here */}
-        </main>
+      <Sidebar />
+
+      {/* MAIN CONTENT  */}
+      <div className="main-content">
+        <Outlet />
       </div>
+
+      {toast && <div className={`toast ${toast.includes('Failed') || toast.includes('failed') ? 'error' : 'success'}`}>{toast}</div>}
     </div>
   );
 };

@@ -35,6 +35,11 @@
   background-color: #f3f4f6;
 }
 
+/* Dark mode hover */
+body.dark .sales-table tr:hover {
+  background-color: #334155;
+}
+
 /* Buttons */
 .edit-btn, .delete-btn {
   padding: 6px 12px;

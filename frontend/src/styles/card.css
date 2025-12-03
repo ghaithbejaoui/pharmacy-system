@@ -29,5 +29,23 @@
   margin: 5px 0 0;
   font-size: 28px;
   font-weight: bold;
-  color: #111827;
+  color: var(--card-color);
+}
+
+/* Dark mode styles */
+body.dark .card {
+  background-color: #1e293b;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+body.dark .card:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+body.dark .card-info h3 {
+  color: #cbd5e1;
+}
+
+body.dark .card-info p {
+  color: var(--card-color);
 }

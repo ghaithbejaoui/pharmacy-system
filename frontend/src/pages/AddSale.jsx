@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getMedicines } from "../services/medicineService";
 import { addSale } from "../services/salesService";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import "../styles/addSale.css";
 
 const AddSale = () => {
   const [medicines, setMedicines] = useState([]);
   const [selected, setSelected] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const { setToast } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -39,22 +41,25 @@ const AddSale = () => {
         quantity: Number(quantity)   // ← THIS WAS MISSING
       });
 
-      alert("Sale recorded!");
+      setToast("Sale recorded!");
+      setTimeout(() => setToast(""), 4000);
       navigate("/sales");
 
     } catch (err) {
       console.error(err);
-      alert("Failed to add sale");
+      setToast("Failed to add sale");
+      setTimeout(() => setToast(""), 4000);
     }
   };
 
   return (
+    <div >
     <div className="add-sale-container">
       <h2>Add Sale</h2>
 
       <form className="add-sale-form" onSubmit={handleSubmit}>
         <label>Medicine:</label>
-        <select 
+        <select
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
           required
@@ -68,8 +73,8 @@ const AddSale = () => {
         </select>
 
         <label>Quantity:</label>
-        <input 
-          type="number" 
+        <input
+          type="number"
           min="1"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
@@ -78,6 +83,7 @@ const AddSale = () => {
 
         <button type="submit" className="submit-btn">Add Sale</button>
       </form>
+    </div>
     </div>
   );
 };

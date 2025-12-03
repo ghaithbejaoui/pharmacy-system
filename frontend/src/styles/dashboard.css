@@ -8,8 +8,7 @@
 /* Main content next to sidebar */
 .main-content {
   flex: 1;
-  margin-left: 220px; /* width of sidebar */
-  padding: 30px;
+  margin-left: 0;
   box-sizing: border-box;
 }
 
@@ -27,4 +26,91 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   margin-top: 20px;
+}
+
+/* Chart container */
+.chart-container {
+  margin-top: 40px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.chart-container h3 {
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+.chart-wrapper {
+  height: 300px;
+}
+
+/* Table container */
+.table-container {
+  margin-top: 40px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.table-container h3 {
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th {
+  padding: 12px;
+  text-align: left;
+  background: #6366f1;
+  color: white;
+}
+
+.table-container td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-container tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* Dark mode hover */
+body.dark .table-container tr:hover {
+  background-color: #334155;
+}
+
+/* Dark mode styles */
+body.dark .chart-container {
+  background: #1e293b;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+body.dark .chart-container h3 {
+  color: #f1f5f9;
+}
+
+body.dark .table-container {
+  background: #1e293b;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+body.dark .table-container h3 {
+  color: #f1f5f9;
+}
+
+body.dark .table-container th {
+  background: #6366f1;
+  color: white;
+}
+
+body.dark .table-container td {
+  color: #e2e8f0;
+  border-bottom: 1px solid #475569;
 }
